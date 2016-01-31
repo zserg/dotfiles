@@ -1,0 +1,15 @@
+---
+- hosts: all
+  tasks:
+    - lineinfile: dest="~/.bash_profile" state=present create=yes
+        line="set -o vi"
+
+    - lineinfile: dest="~/.bash_profile" state=present create=yes
+        line="export PS1='$(__git_ps1) \W\$ '"
+
+    - lineinfile: dest="~/.screenrc" state=present create=yes
+       line='caption always "%{= 45}%{+b w}Screen: %n | %h %=%t %c"'
+
+    - lineinfile: dest="~/.screenrc" state=present create=yes
+      line='hardstatus alwayslastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"'
+
