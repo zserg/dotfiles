@@ -16,6 +16,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'nanotech/jellybeans.vim'
+Plugin 'https://github.com/sickill/vim-monokai.git'
 
 call vundle#end()
 
@@ -78,6 +79,8 @@ set shiftwidth=2
 " set background=dark
 set t_Co=256
 colorscheme jellybeans
+"colorscheme monokai
+
 
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.
