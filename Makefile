@@ -8,8 +8,8 @@ TAGS := always
 #install_addons:
 #	ansible-playbook addons.yml -i local -vv -K --tags $(TAGS)
 
-#install_dotfiles:
-#	ansible-playbook dotfiles.yml -i local -vv
+install_dotfiles:
+	ansible-playbook dotfiles.yml -i local -vv -e curdir=$(CURDIR)
 
 install_ansible:
 	sudo apt-get update

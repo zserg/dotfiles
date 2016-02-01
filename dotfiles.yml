@@ -7,9 +7,7 @@
     - lineinfile: dest="~/.bash_profile" state=present create=yes
         line="export PS1='$(__git_ps1) \W\$ '"
 
-    - lineinfile: dest="~/.screenrc" state=present create=yes
-       line='caption always "%{= 45}%{+b w}Screen: %n | %h %=%t %c"'
+    - file: src={{ curdir }}/files/screenrc dest=~/.screenrc state=link
 
-    - lineinfile: dest="~/.screenrc" state=present create=yes
-      line='hardstatus alwayslastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"'
-
+    - lineinfile: dest="~/.bashrc" state=present create=yes
+        line="export TERMCAP=$(echo $TERMCAP | sed -e 's/Co#8/Co#256/g')"
