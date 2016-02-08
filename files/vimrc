@@ -16,7 +16,10 @@ Plugin 'tpope/vim-commentary'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'nanotech/jellybeans.vim'
-Plugin 'https://github.com/sickill/vim-monokai.git'
+"Plugin 'https://github.com/sickill/vim-monokai.git'
+"Plugin 'https://github.com/altercation/vim-colors-solarized.git'
+"Plugin 'https://github.com/w0ng/vim-hybrid.git'
+Plugin 'junegunn/vim-easy-align'
 
 call vundle#end()
 
@@ -76,8 +79,15 @@ set softtabstop=2
 set shiftwidth=2
 " set smarttab
 
-" set background=dark
-set t_Co=256
+set background=dark
+" Work-around incomplete terminfo databases
+" " Particulalry useful when under `screen`, which may or may not be attached
+" to
+" " a physical terminal capable of 256color mode.
+if match($TERMCAP, 'Co#256:') == 0 || match($TERMCAP, ':Co#256:') > 0
+    set t_Co=256
+endif
+"colorscheme hybrid
 colorscheme jellybeans
 "colorscheme monokai
 
@@ -91,9 +101,17 @@ if has('persistent_undo')
   set undofile
 endif
 
+
+set statusline=
+set statusline+=%<\                       " cut at start
+set statusline+=%2*[%n%H%M%R%W]%*\        " flags and buf no
+set statusline+=%-40f\                    " path
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+set statusline+=%=%1*%y%*%*\              " file type
+set statusline+=%10((%l,%c)%)\            " line and column
+set statusline+=%P                        " percentage of file
 
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
@@ -131,6 +149,12 @@ let g:syntastic_php_checkers=['phpcs', 'php']
 let g:syntastic_php_phpcs_exec='~/.composer/vendor/bin/phpcs'
 let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
 
+let NERDTreeIgnore = ['\.pyc$']
+
+let g:ctrlp_working_path_mode = 'ra'
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+
 nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :UndotreeToggle<cr>
 
@@ -139,6 +163,7 @@ map <C-k> <C-w><Up>
 map <C-j> <C-w><Down>
 map <C-l> <C-w><Right>
 map <C-h> <C-w><Left>
+
 
 " Toggle paste mode
 nmap <silent> <F4> :set invpaste<CR>:set paste?<CR>
@@ -160,11 +185,6 @@ nmap <leader>l mQviwu`Q
 nmap <C-\> :NERDTreeFind<CR>
 nmap <silent> <leader><leader> :NERDTreeToggle<CR>
 
-let NERDTreeIgnore = ['\.pyc$']
-"let g:NERDTreeDirArrows=0
-
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
 nmap <silent> // :nohlsearch<CR>
 noremap ,hl :set hlsearch! hlsearch?<CR>
 
@@ -179,6 +199,8 @@ vmap <Leader>y :w! ~/.vbuf<CR>
 nmap <Leader>y :.w! ~/.vbuf<CR>
 " "paste the contents of the buffer file
 nmap <Leader>p :r ~/.vbuf<CR>
+
+map <C-p> :CtrlPBuffer<CR>
 
 au BufRead,BufNewFile {Vagrantfile,Gemfile,Capfile} set ft=ruby
 " au BufRead,BufNewFile *.phtml set ft=php
@@ -195,3 +217,13 @@ autocmd Filetype php setlocal ts=4 sw=4 autoindent
 if filereadable(expand("~/.vimrc.after"))
   source ~/.vimrc.after
 endif
+
+"Map keys to search item in command mode
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
