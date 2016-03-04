@@ -1,0 +1,24 @@
+set nocompatible
+filetype off
+
+let $PATH = $PATH . ':' . expand("~/.local/bin")
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-commentary'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-repeat'
+Plugin 'nanotech/jellybeans.vim'
+"Plugin 'https://github.com/sickill/vim-monokai.git'
+"Plugin 'https://github.com/altercation/vim-colors-solarized.git'
+"Plugin 'https://github.com/w0ng/vim-hybrid.git'
+Plugin 'junegunn/vim-easy-align'
+
+call vundle#end()

@@ -1,13 +1,15 @@
 ---
 - hosts: all
   tasks:
-    - lineinfile: dest="~/.bash_profile" state=present create=yes
-        line="set -o vi"
-
-    - lineinfile: dest="~/.bash_profile" state=present create=yes
-        line="export PS1='$(__git_ps1) \W\$ '"
-
     - file: src={{ curdir }}/files/screenrc dest=~/.screenrc state=link
 
-    - lineinfile: dest="~/.bashrc" state=present create=yes
-        line="export TERMCAP=$(echo $TERMCAP | sed -e 's/Co#8/Co#256/g')"
+    - file: src={{ curdir }}/files/bash_profile dest=~/.bash_profile state=link
+
+    - lineinfile: dest="~/.bashrc" regexp='xterm-color\)' state=present create=yes
+         line='xterm-256color) color_prompt=yes;;'
+
+
+
+
+
+

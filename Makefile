@@ -1,3 +1,5 @@
+all: install_ansible install_dotfiles configure_vim
+
 configure_vim:
 	ansible-playbook vim.yml -i local -vv -e curdir=$(CURDIR)
 

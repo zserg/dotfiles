@@ -1,9 +1,7 @@
 ---
 - hosts: all
   tasks:
-    - file: src={{ curdir }}/files/{{ item }} dest=~/.{{ item }} state=link
-      with_items:
-        - vimrc
+    - file: src={{ curdir }}/files/vimrc.pre dest=~/.vimrc state=link
 
     - git:
         repo: 'https://github.com/VundleVim/Vundle.vim.git'
@@ -12,5 +10,8 @@
 
     - file: path=~/.vim/spell state=directory
 
-    - command: vim -i NONE -c PluginUpdate -c quitall
-    # FIXME: compile https://github.com/Shougo/vimproc.vim
+    - command: vim +PluginInstall +qall
+
+    - file: src={{ curdir }}/files/vimrc dest=~/.vimrc state=link
+
+    - file: path=~/.vim/spell state=directory

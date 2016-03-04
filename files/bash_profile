@@ -1,0 +1,11 @@
+export TERMCAP=$(echo $TERMCAP | sed -e 's/Co#8/Co#256/g')
+
+if [ "$TERM" == "xterm" ]; then
+    # No it isn't, it's gnome-terminal
+    export TERM=xterm-256color
+fi
+
+if [ -f ~/.bashrc ]; then
+   source ~/.bashrc
+fi
+
